@@ -111,7 +111,10 @@ Dwukropek nie jest potrzebny, bez niego ścieżka w kontenerze będzie taka sama
 
 
 
-### <a name="fakeinstall">[Faking a Native Installation within a Singularity Container](https://singularity-tutorial.github.io/07-fake-installation/)</a>
+### <a name="fakeinstall">Faking a Native Installation within a Singularity Container</a>
+
+[Link opisujący dokładniej ten trick](https://singularity-tutorial.github.io/07-fake-installation/)
+
 Ogólnie tworzymy skrypty, które uruchamiają kontener (`exec`) z interesującymi nas komendami, a następnie podpinamy je pod nasz `PATH`. Wtedy możemy korzystać z kontenerów dokładnie tak samo jakby program był zainstalowany.
 Poniżej `cowsay moo` to spryny skrót (`cowsay` program w `PATH`ie, `moo` to argument) do tego co jest w linijce running (poniżej). Ponadto naturalnie działają pipe'y i przekierowania.
 ```
