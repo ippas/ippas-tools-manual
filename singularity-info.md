@@ -2,7 +2,21 @@
 Ciekawy [tutorial](https://singularity-tutorial.github.io)  
 [Inny](https://carpentries-incubator.github.io/singularity-introduction/) mniej ciekawy.
 
-### Różnica z dokerem
+## Spis treści
+* [Różnica z dokerem](#docker)
+* [Pobieranie obrazów](#pull)
+* [Uruchamianie kontenerów](#run)
+* [Budowanie kontenerów](#build)
+* [Tagi i konwencje nazewnicze](#tags)
+* [Bezpieczeństwo](#safety)
+* [Podpinanie katalogów](#bind)
+* [Long-running Instances](#instances)
+* [Faking a Native Installation within a Singularity Container](#fakeinstall)
+* [Misc](#misc)
+
+
+
+### <a name="docker">Różnica z dokerem</a>
 
 1. [Brak potrzeby dostępu do roota i slurm może łatwo ograniczać zasoby (alokować).](https://www.reddit.com/r/docker/comments/7y2yp2/why_is_singularity_used_as_opposed_to_docker_in/)
 
@@ -18,9 +32,10 @@ W Singularity kontenery są uruchamiane jako użytkownik automatycznie.
 
 4. Singularity stworzone z myślą o HPC (High-performance computing).
 
-### Pobieranie obrazów
 
-#### Skąd można pobierać obrazy:
+### <a name="pull">Pobieranie obrazów</a>
+
+Skąd można pobierać obrazy:
 - `library://` - [official image registry provided by Sylabs.io](https://cloud.sylabs.io/library)
 - `docker://` - docker hub
 - `shub://` - [singularity hub](https://singularity-hub.org/)
@@ -34,7 +49,8 @@ Pobieramy za pomocą komend:
 - `singularity pull docker://godlovedc/lolcow` j.w., automatycznie konwertuje 
 
 
-#### Uruchamianie kontenerów
+
+### <a name="run">Uruchamianie kontenerów</a>
 
 - `singularity shell <plik obrazu>` - uruchom shell w kontenerze; plikiem obrazu zazwyczaj może być też `library://` `doker://` itp. zamiast ścieżki
 - `singularity exec $HOME/lolcow_latest.sif cowsay 'How did you get out of the container?'` - wykonaj (`exec`) komendę w kontenerze
@@ -48,27 +64,29 @@ Singulairty chce zatrzeć granicę między kontenerem, a hostem, tak aby urucham
 - `cat cowsaid | singularity exec lolcow_latest.sif cowsay -n` - pipe **do** kontenera (`-n` oznacza _Disables word wrap_ - nieistotne)
 - `singularity exec lolcow_latest.sif sh -c "fortune | cowsay | lolcat"` - pipe'y wewnątrz kontenera (cudzysłów, aby uniknąć inerpretacji komendy przez shell hosta) - invokes a new shell, but inside the container, and tells it to run the single command line `fortune | cowsay | lolcat`
 
-#### Budowanie kontenerów
+
+### <a name="build">Budowanie kontenerów</a>
 
 Więcej na ten temat [tutaj](https://singularity-tutorial.github.io/03-building/).
 > this is an important concept in Singularity. If you enter a container without root privileges, you are unable to obtain root privileges within the container.
 
-#### Oznaczenia
+
+### <a name="tags">Tagi i konwencje nazewnicze</a>
 Obrazy są tagowane:
 `singularity pull library://debian:9` - tagiem jest `9`.
 
 Tag nie jest przypisany na stałe do konkretnego obrazu, dlatego jeżeli chcemy zawsze dostać ten sam kontener robimy pull by hash: `singularity pull docker://debian@sha256:f17410575376cc2ad0f6f172699ee825a51588f54f6d72bbfeef6e2fa9a57e2f`
 
-#### Konwencje:
-
 `singularity pull library://debian` rozwija się do: `singularity pull library://library/default/debian:latest` Stąd `singularity pull library://lolcow` zwróci błąd, należy zapisać: `singularity pull library://godlovedc/funny/lolcow`, czyli `library://<entity>/<collection>/<container>`.
 
 Podobnie dla dockera `singularity pull docker://godlovedc/lolcow` -> `singularity pull docker://index.docker.io/godlovedc/lolcow:latest`, gdzie `index.docker.io` to _registry_.
 
-#### Bezpieczeństwo
+
+### <a name="safety">Bezpieczeństwo</a>
 Bezpieczeństwo uruchamiania kontenera z internetu. Mechanizmy m.in.: trusted containers, certified images, signed images by authors etc.
 
-#### Podpinanie katalogów
+
+### <a name="bind">Podpinanie katalogów</a>
 <pre>
 [hpc][user@p2284 dir]$ singularity shell bwa_latest.sif
 Singularity> touch touch-in-sing
@@ -83,7 +101,8 @@ Podpinanie innych folderów: `singularity shell --bind src1:dest1,src2:dest2,src
 Dwukropek nie jest potrzebny, bez niego ścieżka w kontenerze będzie taka sama jak poza. Można również: `export SINGULARITY_BINDPATH=src1:dest1,src2:dest2,src3:dest3`.
 
 
-#### Long-running Instances
+
+### <a name="instances">Long-running Instances</a>
 
 - `singularity instance start lolcow.sif <unikalna nazwa>` - uruchamianie w tle (w tutorialu było `instance.start`, ale na prometheusu nie dziala z kropką)
 - `singularity shell instance://<unikalna nazwa jw>` - podpięcie się z powrotem do poprzedniej instancji
@@ -91,7 +110,8 @@ Dwukropek nie jest potrzebny, bez niego ścieżka w kontenerze będzie taka sama
 - `singularity instance list` - wylistowanie instanacji uruchomionych
 
 
-#### [Faking a Native Installation within a Singularity Container](https://singularity-tutorial.github.io/07-fake-installation/)
+
+### <a name="fakeinstall">[Faking a Native Installation within a Singularity Container](https://singularity-tutorial.github.io/07-fake-installation/)</a>
 Ogólnie tworzymy skrypty, które uruchamiają kontener (`exec`) z interesującymi nas komendami, a następnie podpinamy je pod nasz `PATH`. Wtedy możemy korzystać z kontenerów dokładnie tak samo jakby program był zainstalowany.
 Poniżej `cowsay moo` to spryny skrót (`cowsay` program w `PATH`ie, `moo` to argument) do tego co jest w linijce running (poniżej). Ponadto naturalnie działają pipe'y i przekierowania.
 ```
@@ -107,5 +127,6 @@ running: singularity exec /home/student/lolcow/libexec/lolcow.sif cowsay moo
                 ||     ||
 ```
 
-#### Misc
+
+### <a name="misc">Misc</a>
 > Some programs need root privileges to run. These often include services or daemons that start via the `init.d` or `system.d` systems and run in the background. For instance, `sshd` the `ssh` daemon that listens on port 22 and allows another user to connect to your computer requires root privileges. You will not be able to run it in a container unless you start the container as root.
