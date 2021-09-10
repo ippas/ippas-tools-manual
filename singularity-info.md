@@ -10,6 +10,7 @@ Ciekawy [tutorial](https://singularity-tutorial.github.io)
 * [Tagi i konwencje nazewnicze](#tags)
 * [Bezpieczeństwo](#safety)
 * [Podpinanie katalogów](#bind)
+* [Cache](#cache)
 * [Long-running Instances](#instances)
 * [Faking a Native Installation within a Singularity Container](#fakeinstall)
 * [Misc](#misc)
@@ -100,6 +101,11 @@ Podpinanie innych folderów: `singularity shell --bind src1:dest1,src2:dest2,src
 
 Dwukropek nie jest potrzebny, bez niego ścieżka w kontenerze będzie taka sama jak poza. Można również: `export SINGULARITY_BINDPATH=src1:dest1,src2:dest2,src3:dest3`.
 
+
+### <a name="cache">Cache</a>
+Singularity używa cache'u np. przy budowaniu obrazów z docker huba.
+* `singularity cache list` - informacje o użytym miejscu
+* zmienna środowiskowa SINGULARITY_CACHEDIR określa, gdzie ma się znajdować ten cache. Domyślnie jest on w katalogu domowym, ale można to zmienić np. poprzez dodanie komenedy `export SINGULARITY_CACHEDIR=$SCRATCH` w `.bash_profile`.
 
 
 ### <a name="instances">Long-running Instances</a>
