@@ -6,6 +6,7 @@ Do uruchamiania zadań w SLURM służą zasadniczo dwie komendy `srun` i `sbatch
   * umożliwia uruchamianie _job arrays_
   * może zawierać wiele komend `srun` (w przeciwieństwie do `srun`, które nie może mieć innych `srun`)
   * może uruchamiać tylko skrypty
+  * w przeciwieństwie do `srun` jest uruchamiany niezależnie od bieżącego terminala (nie jest subprocesem)
 * srun: 
   * komenda `sstat -j <jobID>` wyświetla statystyki aktualnie wykonywanego zadania (dla `sbatch` nie działa)
   * może uruchamiać skrypty i pojedyncze funkcje
