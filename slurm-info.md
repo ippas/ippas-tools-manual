@@ -233,6 +233,10 @@ ID                     Partition        Name       State   Nodes   Cores   Decl.
 
 ## Statystyki
 
+## Filename patter
+Przydatne np. do definiowania plików `--output` i `--error`
+`%A`, `%a`, `%j` odpowiednio: job array's master job allocation number, job array ID (index) number, jobid of the running job (https://slurm.schedmd.com/sbatch.html).
+
 ## Czasy wykonania
 
 [Zasoby obliczeniowe (ośrodek, liczba węzłów, procesory, pamięć)](http://www.plgrid.pl/oferta/zasoby_obliczeniowe/opis_zasobow/HPC)
