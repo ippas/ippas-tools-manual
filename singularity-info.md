@@ -138,4 +138,38 @@ running: singularity exec /home/student/lolcow/libexec/lolcow.sif cowsay moo
 
 
 ### <a name="misc">Misc</a>
+#### Root privileges
 > Some programs need root privileges to run. These often include services or daemons that start via the `init.d` or `system.d` systems and run in the background. For instance, `sshd` the `ssh` daemon that listens on port 22 and allows another user to connect to your computer requires root privileges. You will not be able to run it in a container unless you start the container as root.
+
+#### Zmienne środowiskowe
+Podczas uruchamiania fastqc pojawił się błąd:
+```
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+...
+```
+Aby go rozwiązać można zdefiniować zmienną `LC_ALL` i przypisać jej wartość `C`. Wyjaśnienie:
+> `LC_ALL` is the environment variable that overrides all the other localisation settings. The `C` locale is a special locale that is meant to be the simplest locale. You could also say that while the other locales are for humans, the `C` locale is for computers.
+
+Można ją podać w linii z komendą: `srun singularity exec fastqc_v0.11.9_cv8.sif sh -c "LC_ALL=C fastqc $FASTQ"`
+
+Należy zwrócić uwagę na sposób definiowa zmiennych. Przykłady poniżej:
+```
+MY_VAR=hello
+singularity exec fastqc_v0.11.9_cv8.sif sh -c "echo $MY_VAR"
+$ `hello`
+```
+`MY_VAR` jest rozwinięte za pomocą basha (cudzysłów `"`), który uruchamia proces singularity.
+```
+MY_VAR=hello
+singularity exec fastqc_v0.11.9_cv8.sif sh -c 'echo $MY_VAR'
+$
+```
+`MY_VAR` **nie** jest rozwinięte za pomocą basha uruchamiającego proces singularity, a singularity pomimo, że ma dostęp do zmiennych środowiskowych hosta 'nie widzi' tej zmiennej (patrz niżej).
+```
+MY_VAR=hello
+export MY_VAR  # można to zrobić razem z linią powyżej, ale ponoć jest mniej _portable_ wtedy
+singularity exec fastqc_v0.11.9_cv8.sif sh -c 'echo $MY_VAR'
+$ `hello`
+```
+`export` sprawia, że zmienne środowiskowe są także widoczne dla subprocesów (w tym wypadku singularity).
