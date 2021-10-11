@@ -1,0 +1,16 @@
+{
+  "align_fastq.left_fastq":
+	[
+	    "data/file_a_1.fq",
+	    "data/file_b_1.fq",
+	    "data/file_c_1.fq",
+	    "data/file_d_1.fq"
+	],
+  "align_fastq.right_fastq": 
+	[
+	    "data/file_a_2.fq",
+	    "data/file_b_2.fq",
+	    "data/file_c_2.fq",
+	    "data/file_d_2.fq"
+	]
+}
