@@ -12,7 +12,7 @@
 # module load plgrid/tools/cromwell - korzystamy z nowszego
 module load plgrid/tools/java11/11
 export TOOLS_DIR="/net/archive/groups/plggneuromol/tools/"
-export $proxy=$(base64 -w 0 $proxy_file)
+
 sg plggneuromol -c 'java \
 	-Dconfig.file=config.conf \
 	-Djava.io.tmpdir=$SCRATCH_LOCAL \
