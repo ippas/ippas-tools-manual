@@ -13,12 +13,13 @@ W zadaniu batchowym uruchamiany jest Cromwell wraz ze zdefiniowanymi danymi wej�
 ### Opis plików:
 
 - `inputs.json`, `options.json`, `*.wdl` - standardowe, niemodyfikowane pliki workflowu
-- `run-workflow.slurm.sh` - skrypt ułatwiający uruchamianie zadania. Zawiera on opcje dla komendy `sbatch`, ładuje potrzebne moduły i wykonuje `cromwell run` wewnątrz `sg`, aby ustawić domyślną grupę.
-- `config.conf` - konfiguracja backendu SLURMowego. Zawiera ona dwie definicje: `submit` i `submit-docker` (dla zadań, które w bloku `runtime` mają zdefiniowany obraz dockerowy). Jedyna konieczna zmiana w tym pliku to dostosowanie partycji i limitu czasu zbiorczo dla wszystkich zadań.
+- `run-workflow.slurm.sh` - skrypt ułatwiający uruchamianie zadania. Zawiera on opcje dla komendy `sbatch`, ładuje potrzebne moduły i wykonuje `cromwell run` wewnątrz `sg`, aby ustawić domyślną grupę. Można w nim wskazać katalog, do którego będą zapisywane logi cromwella.
+- `config.conf` - konfiguracja backendu SLURMowego. Zawiera ona dwie definicje: `submit` i `submit-docker` (dla zadań, które w bloku `runtime` mają zdefiniowany obraz dockerowy). Jedyna konieczna zmiana w tym pliku to dostosowanie partycji i limitu czasu zbiorczo dla wszystkich zadań oraz ustawienie katalogu, gdzie będą zapisywane logi.
 
 ### Uruchomienie przykładowego workflowu
 
 1. Upewnić się, że `SINGULARITY_CACHEDIR` jest dobrze ustawione oraz że zmienna środowiskowa `$proxy` zwraca certyfikat.
+1. W pliku `config.conf` (i ewentualnie `run-workflow.slurm.sh`) zdefiniować katalog z logami.
 1. Uruchomić komendę: `sbatch run-workflow.slurm.sh` w katalogu `slurmwell`.
 1. Wynikiem będzie plik `out/all_numbers` zawierający 4 losowe liczby.
 

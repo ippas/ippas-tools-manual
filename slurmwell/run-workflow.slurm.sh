@@ -6,8 +6,8 @@
 #SBATCH --mem=2GB
 #SBATCH --cpus-per-task=1
 #SBATCH -C localfs
-#SBATCH --output=/net/archive/groups/plggneuromol/slurm-log/%j.out
-#SBATCH --error=/net/archive/groups/plggneuromol/slurm-log/%j.err
+# #SBATCH --output=/net/archive/groups/plggneuromol/slurm-log/%j.out
+# #SBATCH --error=/net/archive/groups/plggneuromol/slurm-log/%j.err
 
 # module load plgrid/tools/cromwell - korzystamy z nowszego
 module load plgrid/tools/java11/11
