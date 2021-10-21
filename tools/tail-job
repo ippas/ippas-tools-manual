@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Show (the last) job stderr and stdout. Logs must be in slurm-log/
+
+
+SLURM_LOG_DIR=/net/archive/groups/plggneuromol/slurm-log/
+
+if [ -z $1 ]
+then
+    JOBID=$(ls -lt $SLURM_LOG_DIR | grep "$(id --user --name)" | head -1 | \
+        cut -d. -f1 | rev | cut -d\  -f1 | rev)
+else
+    JOBID=$1
+fi
+
+tail -n +1 $SLURM_LOG_DIR/$JOBID.*
