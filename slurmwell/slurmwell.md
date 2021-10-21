@@ -31,9 +31,9 @@ W zadaniu batchowym uruchamiany jest Cromwell wraz ze zdefiniowanymi danymi wej�
    ```bash
    export SINGULARITY_CACHEDIR=$SCRATCH/singularity-cache
    ```
-   W przypadku, gdy pierwszy raz używamy danego obrazu, jest on pobierany, budowany i zapisywany w cache'u. Ten proces może trwać nawet kilka godzin, ale jest jednorazowy (aż do użycia nowszego obrazu lub wyczyszczenia cache'a). Podczas tworzenia obrazu dostęp do cache'a jest blokowany, tak aby nie tworzyły się konflikty. Na przykład w przypadku funkcji `scatter`, tylko jedno zadanie spowoduje pobranie obrazu, a pozostałe będą czekać na uruchomienie. Wtedy ich późniejszy start będzie bardzo szybki, gdyż będą korzystać już z gotowego kontenera. Obraz Singularity jest budowany przez główne zadanie batchowe, w którym działa Cromwell.
+   W przypadku, gdy pierwszy raz używamy danego obrazu, jest on pobierany, budowany i zapisywany w cache'u. Ten proces może trwać nawet kilka godzin, ale jest jednorazowy (aż do użycia nowszego obrazu lub wyczyszczenia cache'a). Podczas tworzenia obrazu dostęp do cache'a jest blokowany, tak aby nie tworzyły się konflikty. Na przykład w przypadku funkcji `scatter`, tylko jedno zadanie spowoduje pobranie obrazu, a pozostałe będą czekać na uruchomienie. Wtedy ich późniejszy start będzie bardzo szybki, gdyż będą korzystać już z gotowego kontenera. Obraz Singularity jest budowany przez główne zadanie batchowe, w którym działa Cromwell. Ze względu na limity zapytań do _docker hub_ komenda `singulairty exec` zawiera ścieżkę do zapisanego pliku obrazu, a nie łącze `docker://`.
 
-1. Certyfikat proxy
+1. Certyfikat proxy (instrukcja może ulec zmianie)
 
    Aby zlecać zadania poprzez API, należy wcześniej mieć uruchomioną odpowiednią usługę oraz aktywny certyfikat do uwierzytelniania. Robi się to w następujący sposób:
    - Zalogować się na [Portalu PLGrid](https://portal.plgrid.pl/) i w zakładce Certyfikaty wygenerować _Simple CA_ (jeżeli nie był wcześniej wygenerowany). Jest on ważny przez rok.
@@ -64,5 +64,4 @@ W zadaniu batchowym uruchamiany jest Cromwell wraz ze zdefiniowanymi danymi wej�
 
 ## Do zrobienia
 1. Skonfigurowanie bazy danych dla Cromwella, aby mógłby on być powtórnie uruchamiany i "pamiętał" wykonane zadania. Obecnie baza danych jest w pamięci i znika, gdy Cromwell zostaje zamknięty.
-2. Walidacja wysłania zadania do kolejki SLURMowej. Zadanie wysłane przez API czasem może zostać odrzucone z różnych powodów - na razie nic tego nie sprawdza.
 3. Usunięcie opcji `run-in-background = true`, tak aby Cromwell mógł zamykać i kontrolować wykonywanie (_check-alive_) zleconych zadań.
