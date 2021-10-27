@@ -5,12 +5,7 @@
 
 SLURM_LOG_DIR=/net/archive/groups/plggneuromol/slurm-log/
 
-if [ -z $1 ]
-then
-    JOBID=$(ls -lt $SLURM_LOG_DIR | grep "$(id --user --name)" | head -1 | \
-        cut -d. -f1 | rev | cut -d\  -f1 | rev)
-else
-    JOBID=$1
-fi
+JOB_ID=$(ls -lt $SLURM_LOG_DIR | grep "$(id --user --name).*$1" | \
+    head -1 | cut -d. -f1 | rev | cut -d\  -f1 | rev)
 
-tail -n +1 $SLURM_LOG_DIR/$JOBID.*
+tail -n +1 $SLURM_LOG_DIR/$JOB_ID.*
