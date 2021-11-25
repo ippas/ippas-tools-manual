@@ -6,6 +6,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=2GB
 #SBATCH --time 1:00:00
+#SBATCH -C localfs
 #SBATCH --job-name jupyter-notebook
 
 
