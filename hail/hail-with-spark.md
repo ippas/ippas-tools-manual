@@ -17,3 +17,7 @@ hl.init(
     log=f'/path/to/log/hail-{str(uuid4())}.log',
 )
 ```
+
+## Tips & Hacks
+
+1. W notebooku dobrze jest podawać pełne ścieżki do czytania i zapisywania plików - bez tego Hail może mieć problem z zapisem/odczytem.
