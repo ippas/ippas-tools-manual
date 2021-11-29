@@ -9,6 +9,7 @@
 #SBATCH -C localfs
 #SBATCH --job-name jupyter-notebook
 
+JUPYTER="jupyter notebook"
 
 # start spark
 module load plgrid/apps/spark/2.4.5
@@ -24,7 +25,7 @@ ipnport_local=$ipnport
 ipnip=$(hostname -i)
 
 # start an ipcluster instance and launch jupyter server
-jupyter notebook --no-browser --port=$ipnport --ip=$ipnip &
+$JUPYTER --no-browser --port=$ipnport --ip=$ipnip &
 
 # wait for a kernel to start
 counter=0
@@ -34,7 +35,7 @@ do
     sleep 1
     ((counter=counter+1))
 
-    jupyter_servers=$(jupyter notebook list | sed -r 's/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/localhost/')
+    jupyter_servers=$($JUPYTER list | sed -r 's/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/localhost/')
 
     if [[ "$jupyter_servers" =~ "localhost" ]]
     then
