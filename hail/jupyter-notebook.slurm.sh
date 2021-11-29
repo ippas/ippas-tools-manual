@@ -25,7 +25,26 @@ ipnip=$(hostname -i)
 
 # start an ipcluster instance and launch jupyter server
 jupyter notebook --no-browser --port=$ipnport --ip=$ipnip &
-sleep 5
+
+# wait for a kernel to start
+counter=0
+
+while :
+do
+    sleep 1
+    ((counter=counter+1))
+
+    jupyter_servers=$(jupyter notebook list | sed -r 's/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/localhost/')
+
+    if [[ "$jupyter_servers" =~ "localhost" ]]
+    then
+        break
+    elif [[ $counter -ge 20 ]]
+    then
+        jupyter_servers="Can't retrieve server URL"
+        break
+    fi
+done
 
 # print tunneling instructions
 echo -e "
@@ -36,7 +55,7 @@ ssh -o ServerAliveInterval=300 -N -L $ipnport_local:$ipnip:$ipnport ${USER}@pro.
 
 Then open a browser on your local machine to the following address
 ------------------------------------------------------------------
-$(jupyter notebook list | sed -r 's/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/localhost/')
+$jupyter_servers
 ------------------------------------------------------------------
 "
 sleep infinity
