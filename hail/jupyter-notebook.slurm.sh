@@ -13,6 +13,8 @@ JUPYTER="jupyter notebook"
 
 # start spark
 module load plgrid/apps/spark/3.1.2
+export SPARK_LOCAL_DIRS=$SCRATCH_LOCAL/
+export SPARK_WORKER_DIR=$SCRATCH_LOCAL/work
 start_spark_cluster
 
 # source python virtual environment
