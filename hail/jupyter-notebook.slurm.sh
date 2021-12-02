@@ -12,11 +12,11 @@
 JUPYTER="jupyter notebook"
 
 # start spark
-module load plgrid/apps/spark/2.4.5
+module load plgrid/apps/spark/3.1.2
 start_spark_cluster
 
 # source python virtual environment
-source venv-hail-0.2.64/bin/activate
+source venv-hail-0.2.79/bin/activate
 
 ## get tunneling info
 XDG_RUNTIME_DIR=""
