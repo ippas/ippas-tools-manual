@@ -1,3 +1,1 @@
-# Cyfronet
-
-Przydatne informacje na temat pracy na cyfronecie na PLGrid.
+Przydatne informacje na temat pracy z różnymi narzędziami.
