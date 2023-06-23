@@ -32,3 +32,4 @@ It's docker image with nextflow, required configuration, and other tools. How to
 # Troubleshooting
 1. calico unauthorized: `kubectl rollout restart daemonset/calico-node -n kube-system`
 1. Sometimes default resources aren't sufficient. If that's the case, use: https://nf-co.re/usage/configuration#tuning-workflow-resources
+1. While pulling a repository: `cannot open git-upload-pack`. It's DNS problem, keep trying until it works (or change DNS servers).
