@@ -1,7 +1,7 @@
 # Only one time
-Put all configurations in an appropriate repository.
+Put all configurations in an appropriate repository (ippas/config).
 
-1. Install `kubectl`, ask for config, and put it in `~/.kube` directory locally. Do not push it to the repository ;)
+1. Install `kubectl`, ask for config, and put it in `~/.kube` directory locally. Do not push it to the repository ;) You can check your `kubectl` configuration with `kubectl cluster-info`.
 1. Create namespace:
     - see examples in `microk8s/namespaces/` (remember to change the name),
     - run locally: `kubectl create -f microk8s/namespace/your-ns.yaml`.
