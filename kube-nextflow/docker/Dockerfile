@@ -1,6 +1,9 @@
 # Use an official Ubuntu 22.04 as a parent image
 FROM ubuntu:22.04
 
+# Set default shell
+SHELL ["/bin/bash", "-c"]
+
 # Avoid timezone interactive dialog
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -14,10 +17,16 @@ RUN apt-get update && \
                        git \
                        neovim
 
+# Set default shell for screen
+RUN echo "shell /bin/bash" > ~/.screenrc
+
 # Install Java through SDKMAN! and nextflow
-COPY install-nextflow.sh /
-RUN chmod +x /install-nextflow.sh
-RUN /install-nextflow.sh
+RUN curl -s "https://get.sdkman.io" | bash && \
+    source "/root/.sdkman/bin/sdkman-init.sh" && \
+    sdk install java 17.0.6-amzn && \
+    cd /usr/bin && \
+    wget -qO- "https://get.nextflow.io" | bash
+
 ENV NXF_EXECUTOR k8s 
 ENV NXF_WORK /workspace/nxf_work
 ENV NXF_ASSETS /workspace/nxf_assets
@@ -25,7 +34,6 @@ ENV NXF_ASSETS /workspace/nxf_assets
 # Clean up
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN rm /install-nextflow.sh
 
 # Set default command
 CMD ["bash"]
