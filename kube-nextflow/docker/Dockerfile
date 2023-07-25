@@ -30,6 +30,7 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 ENV NXF_EXECUTOR k8s 
 ENV NXF_WORK /workspace/nxf_work
 ENV NXF_ASSETS /workspace/nxf_assets
+COPY nextflow.config /
 
 # Clean up
 RUN apt-get clean && \

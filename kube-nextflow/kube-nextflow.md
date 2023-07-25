@@ -26,6 +26,7 @@ It's docker image with nextflow, required configuration, and other tools. How to
 
 # Every time you want to carry out an analysis:
 1. Log in to the pod running Ubuntu with nextflow: `kubectl exec --namespace your-ns --stdin --tty nextflow -- /bin/bash`.
+1. Analyis should be run in root directory `/` (so nextflow could apply config file in _the current directory_)
 1. Run your workflow or an example one: `nextflow run nextflow-io/hello -c /workspace/nextflow.config` (do not forget to specify the path to the nextflow config `-c`).
 1. Wait for pods to do their job.
 
