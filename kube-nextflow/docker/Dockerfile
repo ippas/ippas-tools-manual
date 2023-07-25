@@ -32,6 +32,9 @@ ENV NXF_WORK /workspace/nxf_work
 ENV NXF_ASSETS /workspace/nxf_assets
 COPY nextflow.config /
 
+# Set up the alias to run screen in UTF-8 mode
+RUN echo "alias screen='screen -U'" >> ~/.bashrc
+
 # Clean up
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
