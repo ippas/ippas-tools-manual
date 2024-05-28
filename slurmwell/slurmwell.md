@@ -36,10 +36,10 @@ W zadaniu batchowym uruchamiany jest Cromwell wraz ze zdefiniowanymi danymi wej�
 1. Certyfikat proxy (instrukcja może ulec zmianie)
 
    Aby zlecać zadania poprzez API, należy wcześniej mieć uruchomioną odpowiednią usługę oraz aktywny certyfikat do uwierzytelniania. Robi się to w następujący sposób:
-   - Zalogować się na [Portalu PLGrid](https://portal.plgrid.pl/) i w zakładce Certyfikaty wygenerować _Simple CA_ (jeżeli nie był wcześniej wygenerowany). Jest on ważny przez rok.
-   - Zapisać certyfikat na dysku i przesłać go na serwer. Najwygodniej jest to zrobić do domyślnej lokalizacji (`~/.globus/usercred.p12` - uwaga na zmienioną nazwę pliku oraz katalog, który może jeszcze nie istnieć). Dodatkowo należy zmienić uprawnienia dla pliku na `600`.
-   - Wygenerować _proxy certificate_ za pomocą komendy `grid-proxy-init -valid 8760:0`. Będzie on wtedy ważny przez rok (jest to inny certyfikat niż ten wygenerowany na Portalu). Wymagane będzie podanie hasło do logowania na serwerze.
-   - Utworzyć i wyeksportować zmienną środowiskową `proxy` za pomocą komendy `export proxy=$(base64 -w 0 $(grid-proxy-info -path))`. Ten krok należy robić po każdym logowaniu (istnieje lepszy i bezpieczniejszy sposób?)
+   - Wnioskujemy o certyfikat osobisty na stronie [Urzędu certyfikacji](https://plgrid-ca.pl/enrol/personal_csr.jsp).
+   - Po potwierdzeniu tożsamości i otrzymaniu certyfikatu przesłamy go na serwer pamiętając o odpowiednich uprawnieniach.
+   - Wygenerować _proxy certificate_ za pomocą komendy `grid-proxy-init -cert path/to/pem -key path/to/key -valid 8760:0`. Będzie on wtedy ważny przez rok.
+   - Utworzyć i wyeksportować zmienną środowiskową `proxy` za pomocą komendy `export proxy=$(base64 -w 0 $(grid-proxy-info -path))`. Ten krok należy robić po każdym logowaniu (istnieje lepszy i bezpieczniejszy sposób?).
 
 1. Usługa Rimrock
 
